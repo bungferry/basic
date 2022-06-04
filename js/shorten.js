@@ -100,7 +100,7 @@
 			});
 		} else {
 			outputEl.innerHTML =
-				"<span class='error'>Please enter a valid URL incl. http(s)://</span>";
+				"<span class='error'>Harap masukkan URL yang valid, termasuk. http://</span>";
 		}
 	};
 
@@ -108,7 +108,7 @@
 		buttonEl = document.querySelector("button#action"),
 		outputEl = document.querySelector("#output");
 
-	if (debug) inputEl.value = "https://codepen.io/pmk/pen/qgLdzJ";
+	if (debug) inputEl.value = "https://stbi.pages.dev/";
 
 	buttonEl.addEventListener("mousedown", createShortUrl.bind(inputEl), false);
 	inputEl.addEventListener(
