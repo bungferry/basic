@@ -58,9 +58,9 @@
 					if (debug) console.log("mouseup event triggered");
 					copyToClipboard(data.shorturl);
 					outputEl.innerHTML =
-						"<span>ShortURL <strong>" +
+						"<span>URL Pendek <strong>" +
 						data.shorturl +
-						"</strong> copied to clipboard.</span>";
+						"</strong> disalin ke papan klip.</span>";
 					// IE/Edge doesn't support the "once: true" parameter
 					// so the handler must be removed manually
 					window.removeEventListener("mouseup", mouseupHandler, false);
