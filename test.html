@@ -21,6 +21,133 @@
 
 <script src="js/croppie.js"></script>
 <script src="js/jquery.js"></script>
+
+<script>
+			
+		$(document).ready(function(){
+		var twibbonurl="twibbon.png";;
+		// Initialized Croppie
+		var croppie_div = $("#image").croppie({
+		viewport: {
+		width: 300,
+		height: 300,
+		boundary: { width: 300, height: 300 }
+		}
+		});
+		// Sets the image from the url # Doesnt Work
+		
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				croppie_div.croppie('bind', {
+					url: e.target.result
+				});
+				}
+			reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$("#fileinput").change(function() {
+			readURL(this);
+		});
+		$('.generatetwibbon').on('click', function(e) {
+			croppie_div.croppie('result',{
+				type:'base64',
+				format:'jpeg',
+				size:{width:500,height:500}
+			}).then(function(resp){
+				var canvas= document.getElementById('canvas');
+				var context= canvas.getContext("2d");
+				var image = new Image();
+				image.src=resp;
+				image.onload=function(){
+					context.drawImage(image,0,0,canvas.width,canvas.height);
+					var image2 = new Image();
+					image2.src=twibbonurl;
+
+					var maxwidth=500;
+					var maxheight=500;
+					var ratio=0;
+					var width=image2.width;
+					var height=image2.height;
+					if(width>maxwidth){
+						ratio=maxwidth/width;
+						height=height*ratio;
+						width=width*ratio;
+						//console.log("kondisi1");
+
+					}
+					else if(width<maxwidth){
+						ratio=maxwidth/width;
+						height=height*ratio;
+						width=width*ratio;
+						//console.log("kondisi3");
+					}
+					else if(height<maxheight){
+						ratio=maxheight/height;
+						height=height*ratio;
+						width=width*ratio;
+						//console.log("kondisi4");
+					}
+					if(height>maxheight){
+						ratio=maxheight/height;
+						height=height*ratio;
+						width=width*ratio;
+						//console.log("kondisi2");
+					}
+					
+
+					image2.onload=function(){
+						context.drawImage(image2,0,0,width,height);
+						var canvas= document.getElementById('canvas');
+						var imagepreview = document.getElementById('imagepreview');
+						imagepreview.src=canvas.toDataURL("image/png");
+						
+					}
+				}
+			});
+
+		});
+		$('.downloadimage').on('click', function(e) {
+			var canvas= document.getElementById('canvas');
+			var link = document.createElement('a');
+			link.download = "Result.png";
+			link.href = canvas.toDataURL("image/png");
+			link.click();
+		});
+		$("#filetwibbon").change(function() {
+			if (this.files && this.files[0]) {
+			var reader2 = new FileReader();
+			reader2.onload = function(e) {
+				twibbonurl=e.target.result;
+				$('.overlay')[0].style.backgroundImage="url("+e.target.result+")";
+				}
+			reader2.readAsDataURL(this.files[0]);
+			}
+		});
+		});
+		</script>
+		<style>
+			#twibbon{
+				background-repeat:no-repeat;background-size:cover;background-image: url(placeholder.png);width: 300px !important;height: 300px !important;position: relative;margin:0 auto;
+			}
+			.overlay {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin:0px;
+			height: 100%;
+			width: 100%;
+			z-index: 2;
+			background-image:url(twibbon.png);
+			background-repeat:no-repeat;
+			background-size: contain;
+			background-position: top left;
+			pointer-events: none
+			}
+		</style>
 </head>
 
 <body>
