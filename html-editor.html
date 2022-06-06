@@ -96,7 +96,7 @@
 <li><a href=".">Home</a> <li>
 <a href="shorten-url">Shorten URL</a> <li>
 <a href="twibbon">Twibbon</a> <li>
-<a href="text-generator">Text Generator</a> 
+<a href="html-editor">HTML Editor</a> 
 </ul> 
 <img src="hamburger.svg" id=menu-icon > 
 </nav> 
@@ -104,25 +104,51 @@
 
 <div class=franklin-content >
 <h1 id=working_with_tags >
-<a href="#" class=header-anchor >Twibbon Generator</a>
+<a href="#" class=header-anchor >HTML Editor</a>
 </h1> 
 
 <p>Ini adalah situs web tempat Anda dapat menambahkan foto ke dalam bingkai.</p>
 <p>Upload gambar yang ingin di jadikan twibbon lalu klik 'Buat twibbon!'.</p>
 <p>Klik kanan dan save untuk PC atau sentuh dan tahan lalu download image untuk smartphone jika link download mati.</p>
 
-    <p>
-    <img id="preview" src="img/preview.png"/>
-    <img id="twibbon" src="img/twibbon.png" style="display: none"/>
-    <canvas id="twibbonbaker" style="width: 300px; height: 300px; display: none"></canvas>
-    </p>
-    <p>Pastikan gambar yang di upload memiliki ukuran.</p>
-    <p><input id="fileInput" type="file" /></p>
-    
-    <p><button id="dpwload" onclick="drawImage()">Buat twibbon!</button>
-    <a href="#" id="dpwload2" download="download.png" style="display: none">Download twibbon!</a>
-    <button id="cancel" onclick="location.reload()">Cancel</button></p>
+    <p><textarea id=data><!doctype html>
+<html>
+ <body>
 
+  <style>
+    body {
+      padding: 50px;
+    }
+    span {
+      display: inline-block;
+      background: #a0ffa0;
+      padding: 20px;
+    }
+  </style>
+
+  <span>
+    Edit the page on top, see 
+    the result on the bottom.
+  </span>
+
+ </body>
+</html></textarea>
+  
+		<div class=controls>
+			<label>
+				<input type=checkbox id=realtime onclick="update()" checked>
+				realtime
+			</label> | 
+			<a href=# onClick="update()">update</a> |
+			<a href=# onClick="goFullscreen(false)">fullscreen</a> |
+			<a href=# onClick="goFullscreen(true)" >new fullscreen</a> |
+			<a href="."
+			   target=_blank>github</a>
+		</div>
+		<iframe name=hello style="width: 100%; height: 100%"></iframe>
+
+		</p>
+    
 <h2 id=customising_tag_pages >
 <a href="#" class=header-anchor >Sosial</a>
 </h2>
@@ -141,6 +167,40 @@
 </div>
 </div>
 
-<script type="text/javascript" src="js/script.js"></script>
+<script>
+
+			function update()
+			{
+				let outty = window.hello.document;
+				outty.open();
+				let inny=document.getElementById("data");
+				outty.write(inny.value);
+				outty.close();
+			};
+
+			function goFullscreen(newWin)
+			{
+				if (newWin) outWin= window.open()
+				else        outWin= window.open("about:blank","html_editor");
+				outWin.focus();
+				let outty = outWin.document;
+				outty.open();
+				let inny=document.getElementById("data");
+				outty.write(inny.value);
+				outty.close();
+			}
+
+			function realtime()
+			{
+				if (!document.querySelector("#realtime").checked) return;
+				update();
+			}
+
+			dataArea=document.getElementById("data");
+			dataArea.onkeyup=realtime;
+
+			update();
+
+		</script>
 </body>
 </html>
