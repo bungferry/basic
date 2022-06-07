@@ -131,6 +131,38 @@
     Made with ❤️ by <a href=".">Ferry Ayunda</a>
 </div>
 </div>
-<script src="js/shorten.js"></script>
+<script src="js/insta.min.js"></script>
+    <script src="js/insta.js"></script>
+
+    <script>
+        $('#instalink').keydown(function (e) {
+            var keyCode = (e.keyCode ? e.keyCode : e.which);
+            if (keyCode == 13) {
+                $('#imagedloadbtn').trigger('click');
+            }
+        });
+    </script>
+    <script>
+        $("#preview div").hide();
+        $("#preview");
+    </script>
+
+    <script>
+        var realImage = document.getElementById('imgpreview');
+        var loadingImage = document.getElementById('loadingImage');
+        loadingImage.style.display = 'inline';
+        realImage.style.display = 'none';
+
+        // Create new image
+        var imgPreloader = new Image();
+        // define onload (= image loaded)
+        imgPreloader.onload = function () {
+            realImage.src = imgPreloader.src;
+            realImage.style.display = 'inline';
+            loadingImage.style.display = 'none';
+        };
+        // set image source
+        imgPreloader.src = 'img/placeholder.gif';
+    </script>
 </body>
 </html>
